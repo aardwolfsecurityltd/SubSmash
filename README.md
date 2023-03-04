@@ -17,10 +17,6 @@ This Python script searches for subdomains of a given domain name. It does this 
 4. Optionally, enter the path to a custom wordlist file or leave it blank to use the default wordlist.
 5. Wait for the script to finish running.
 
-## Acknowledgments
-
-This script was inspired by a similar script created by Daniel Miessler. The default wordlist used in this script is also from his repository.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE)
