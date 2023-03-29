@@ -2,15 +2,23 @@ import requests
 import threading
 import os
 from tqdm import tqdm
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 
 # Define a function to test subdomains
 def test_subdomains(domain_name, wordlist, progress, results):
+    session = requests.Session()
+    retries = Retry(total=3, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+    adapter = HTTPAdapter(max_retries=retries)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+    
     for word in wordlist:
         subdomain = f"{word}.{domain_name}"
         url = f"http://{subdomain}"
         try:
-            response = requests.get(url)
-            if response.status_code < 400:
+            response = session.get(url)
+            if response.status_code < 500:
                 results.append(subdomain)
         except:
             pass
